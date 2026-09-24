@@ -9,8 +9,8 @@ import { heroPropertiesData } from "@/app/data/data";
 const banners = [
   {
     src: "/banner1.png",
-    subtitle: "Elevated Living Engineered by Hero Properties",
-    title: "Hero Properties Residences",
+    subtitle: "Elevated Living Engineered by Hero Homes",
+    title: "Hero Homes Residences",
   },
   {
     src: "/banner2.png",
@@ -20,7 +20,7 @@ const banners = [
   {
     src: "/banner3.png",
     subtitle: "Iconic High-Rise Towers",
-    title: " Privacy & Elegance",
+    title: "Privacy & Elegance",
   },
 ];
 
@@ -52,7 +52,7 @@ export default function Hero() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...formData,
-          unitType: "Hero Properties - 3 & 4 BHK",
+          unitType: "Hero Homes - 3 & 4 BHK",
         }),
       });
 
@@ -69,14 +69,14 @@ export default function Hero() {
 
   const whatsappNumber = heroPropertiesData?.contactInfo?.whatsappNumber || "919910374156";
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-    heroPropertiesData?.contactInfo?.whatsappMessage || "Hi, I would like to request the e-brochure and pricing."
+    heroPropertiesData?.contactInfo?.whatsappMessage || "Hi, I would like to request the e-brochure and pricing for Hero Homes."
   )}`;
 
   return (
     <section className="relative min-h-screen bg-[#121214] text-[#FDFBF7] flex flex-col justify-start lg:justify-between overflow-hidden">
       
-      {/* ================= MOBILE VIEW: Full Banner First (Clean image view) ================= */}
-      <div className="block lg:hidden w-full h-[50vh] sm:h-[55vh] relative overflow-hidden shrink-0">
+      {/* ================= MOBILE VIEW: Full Banner First ================= */}
+      <div className="block lg:hidden w-full h-[48vh] sm:h-[54vh] relative overflow-hidden shrink-0">
         {banners.map((banner, index) => (
           <div
             key={index}
@@ -91,8 +91,8 @@ export default function Hero() {
               priority={index === 0}
               className="object-cover"
             />
-            {/* Smooth gradient blend into charcoal foundation */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#121214] via-transparent to-black/30" />
+            {/* Darker mobile gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#121214] via-black/40 to-black/60" />
           </div>
         ))}
 
@@ -103,7 +103,7 @@ export default function Hero() {
               key={idx}
               onClick={() => setCurrentSlide(idx)}
               className={`h-1.5 rounded-full transition-all duration-300 ${
-                idx === currentSlide ? "w-7 bg-[#C5A059]" : "w-2 bg-white/40"
+                idx === currentSlide ? "w-7 bg-[#C5A059]" : "w-2 bg-white/50"
               }`}
               aria-label={`Go to slide ${idx + 1}`}
             />
@@ -129,25 +129,25 @@ export default function Hero() {
             />
           </div>
         ))}
-        {/* Luxury Vignette using your brand charcoal (#121214) */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#121214]/95 via-[#121214]/70 to-[#121214]/30" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#121214]/80 via-transparent to-[#121214]/40" />
+        {/* Darker overlays for rich contrast behind cards */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#121214]/90 via-[#121214]/65 to-[#121214]/40" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#121214]/80 via-transparent to-black/50" />
       </div>
 
       {/* Ambient luxury gold glow */}
-      <div className="absolute top-1/4 left-8 w-[420px] h-[420px] bg-[#C5A059]/10 rounded-full blur-[130px] pointer-events-none" />
+      <div className="absolute top-1/4 left-8 w-[450px] h-[450px] bg-[#C5A059]/[0.08] rounded-full blur-[140px] pointer-events-none" />
 
       {/* ================= MAIN CONTENT CONTAINER ================= */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 lg:py-16 w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center my-auto">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-20 w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center my-auto">
         
         {/* LEFT COLUMN: Narrative & Highlights */}
         <div className="lg:col-span-7 text-center lg:text-left">
           
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-black/40 border border-[#C5A059]/60 backdrop-blur-md mb-4 shadow-sm">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/40 border border-[#C5A059]/60 backdrop-blur-md mb-4 shadow-sm">
             <Sparkles className="w-3.5 h-3.5 text-[#C5A059]" />
-            <span className="text-[11px] sm:text-xs uppercase tracking-[0.24em] text-[#F3E2B8] font-bold">
-              Hero Properties
+            <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.24em] text-[#F3E2B8] font-bold">
+              Hero Homes
             </span>
           </div>
 
@@ -156,35 +156,35 @@ export default function Hero() {
             <span className="text-xs sm:text-sm uppercase tracking-[0.26em] text-[#C5A059] font-semibold block mb-1">
               {banners[currentSlide].subtitle}
             </span>
-            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-serif text-white tracking-tight leading-tight">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif text-white tracking-tight leading-tight drop-shadow-sm">
               {banners[currentSlide].title}
             </h1>
           </div>
 
-          <p className="text-[#F7F2E7]/80 text-xs sm:text-base lg:text-lg mb-6 leading-relaxed max-w-2xl font-light mx-auto lg:mx-0">
+          <p className="text-gray-200 text-xs sm:text-base lg:text-lg mb-6 leading-relaxed max-w-2xl font-light mx-auto lg:mx-0 drop-shadow-sm">
             Ultra-Luxury 3 & 4 BHK Smart Green Residences set within an expansive gated township. 
             Featuring Fully Furnished Homes, world-class architecture, and sustainable luxury planning. 
             Starting Price <strong className="text-[#F3E2B8] font-semibold">₹1.89 Cr* Onwards</strong>.
           </p>
 
           {/* 3 Key Highlights Badges */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 max-w-lg mx-auto lg:mx-0 mb-6 lg:mb-8">
-            <div className="flex items-center justify-center sm:justify-start gap-2.5 p-2.5 sm:p-3 rounded-xl bg-black/30 border border-[#E8DEC8]/20 backdrop-blur-md">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-lg mx-auto lg:mx-0 mb-8">
+            <div className="flex items-center justify-center sm:justify-start gap-2.5 p-3 rounded-2xl bg-white/95 border border-[#E8DEC8] hover:border-[#C5A059] shadow-md transition-all">
               <CheckCircle2 className="w-4 h-4 text-[#C5A059] shrink-0" />
-              <span className="text-xs font-medium text-[#FDFBF7]">Fully Furnished Homes</span>
+              <span className="text-xs font-semibold text-[#121214]">Fully Furnished Homes</span>
             </div>
-            <div className="flex items-center justify-center sm:justify-start gap-2.5 p-2.5 sm:p-3 rounded-xl bg-black/30 border border-[#E8DEC8]/20 backdrop-blur-md">
+            <div className="flex items-center justify-center sm:justify-start gap-2.5 p-3 rounded-2xl bg-white/95 border border-[#E8DEC8] hover:border-[#C5A059] shadow-md transition-all">
               <CheckCircle2 className="w-4 h-4 text-[#C5A059] shrink-0" />
-              <span className="text-xs font-medium text-[#FDFBF7]">Smart Green Living</span>
+              <span className="text-xs font-semibold text-[#121214]">Smart Green Living</span>
             </div>
-            <div className="flex items-center justify-center sm:justify-start gap-2.5 p-2.5 sm:p-3 rounded-xl bg-black/30 border border-[#E8DEC8]/20 backdrop-blur-md">
+            <div className="flex items-center justify-center sm:justify-start gap-2.5 p-3 rounded-2xl bg-white/95 border border-[#E8DEC8] hover:border-[#C5A059] shadow-md transition-all">
               <CheckCircle2 className="w-4 h-4 text-[#C5A059] shrink-0" />
-              <span className="text-xs font-medium text-[#FDFBF7]">Expansive Township</span>
+              <span className="text-xs font-semibold text-[#121214]">Expansive Township</span>
             </div>
           </div>
 
           {/* Desktop Slide Indicators */}
-          <div className="hidden lg:flex items-center gap-3">
+          <div className="hidden lg:flex items-center gap-2.5">
             {banners.map((_, idx) => (
               <button
                 key={idx}
@@ -203,11 +203,11 @@ export default function Hero() {
 
         </div>
 
-        {/* RIGHT COLUMN: Ivory & Gold Lead Form */}
+        {/* RIGHT COLUMN: Elevated Ivory & Gold Lead Form */}
         <div className="lg:col-span-5 w-full">
-          <div className="bg-[#FDFBF7] text-[#121214] border border-[#E8DEC8] rounded-3xl p-6 sm:p-8 shadow-[0_25px_60px_rgba(0,0,0,0.6)] relative overflow-hidden">
+          <div className="bg-[#FDFBF7] text-[#121214] border-2 border-[#C5A059]/40 rounded-3xl p-6 sm:p-8 shadow-[0_25px_60px_rgba(0,0,0,0.45)] relative overflow-hidden">
             
-            {/* Top decorative gold glow line */}
+            {/* Top decorative gold highlight bar */}
             <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#C5A059] to-transparent" />
 
             <div className="text-center mb-5">
@@ -223,7 +223,7 @@ export default function Hero() {
             </div>
 
             {errorMsg && (
-              <div className="mb-4 p-3 rounded-xl bg-red-500/10 border border-red-500/30 text-[#E31826] text-xs text-center">
+              <div className="mb-4 p-3 rounded-xl bg-red-50 border border-red-200 text-[#E31826] text-xs text-center">
                 {errorMsg}
               </div>
             )}
@@ -239,7 +239,7 @@ export default function Hero() {
                   placeholder="Enter your full name"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-3.5 py-2.5 bg-white border border-[#E8DEC8] rounded-xl text-[#121214] placeholder-[#5A5D64]/50 text-xs sm:text-sm focus:outline-none focus:border-[#C5A059] transition-all shadow-sm"
+                  className="w-full px-4 py-2.5 bg-white border border-[#E8DEC8] rounded-xl text-[#121214] placeholder-[#5A5D64]/50 text-xs sm:text-sm focus:outline-none focus:border-[#C5A059] transition-all shadow-sm"
                 />
               </div>
 
@@ -252,7 +252,7 @@ export default function Hero() {
                   placeholder="name@example.com"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-3.5 py-2.5 bg-white border border-[#E8DEC8] rounded-xl text-[#121214] placeholder-[#5A5D64]/50 text-xs sm:text-sm focus:outline-none focus:border-[#C5A059] transition-all shadow-sm"
+                  className="w-full px-4 py-2.5 bg-white border border-[#E8DEC8] rounded-xl text-[#121214] placeholder-[#5A5D64]/50 text-xs sm:text-sm focus:outline-none focus:border-[#C5A059] transition-all shadow-sm"
                 />
               </div>
 
@@ -266,7 +266,7 @@ export default function Hero() {
                   placeholder="+91 99103 74156"
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  className="w-full px-3.5 py-2.5 bg-white border border-[#E8DEC8] rounded-xl text-[#121214] placeholder-[#5A5D64]/50 text-xs sm:text-sm focus:outline-none focus:border-[#C5A059] transition-all shadow-sm"
+                  className="w-full px-4 py-2.5 bg-white border border-[#E8DEC8] rounded-xl text-[#121214] placeholder-[#5A5D64]/50 text-xs sm:text-sm focus:outline-none focus:border-[#C5A059] transition-all shadow-sm"
                 />
               </div>
 
@@ -276,9 +276,8 @@ export default function Hero() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="group relative w-full overflow-hidden py-3.5 px-6 rounded-xl bg-gradient-to-r from-[#C5A059] via-[#D4AF37] to-[#9E7B35] hover:brightness-105 text-[#121214] font-bold text-xs tracking-[0.14em] uppercase transition-all duration-300 shadow-[0_6px_20px_rgba(197,160,89,0.3)] hover:shadow-[0_8px_25px_rgba(197,160,89,0.4)] flex items-center justify-center gap-2 cursor-pointer border border-[#F3E2B8]/40 disabled:opacity-70"
+                  className="group relative w-full overflow-hidden py-3.5 px-6 rounded-xl bg-gradient-to-r from-[#C5A059] via-[#D4AF37] to-[#9E7B35] hover:brightness-105 text-[#121214] font-bold text-xs tracking-[0.14em] uppercase transition-all duration-300 shadow-[0_6px_20px_rgba(197,160,89,0.35)] hover:shadow-[0_8px_25px_rgba(197,160,89,0.5)] flex items-center justify-center gap-2 cursor-pointer border border-[#F3E2B8]/40 disabled:opacity-70"
                 >
-                  {/* Subtle sweep light effect */}
                   <span className="absolute inset-0 w-1/2 h-full bg-white/20 skew-x-12 -translate-x-full group-hover:translate-x-[300%] transition-transform duration-1000 ease-out" />
                   
                   {loading ? (
@@ -289,7 +288,7 @@ export default function Hero() {
                   ) : (
                     <>
                       <span>Get Instant Master Plan</span>
-                      <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                      <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1 text-[#121214]" />
                     </>
                   )}
                 </button>

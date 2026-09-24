@@ -41,7 +41,7 @@ export default function Navbar() {
   const whatsappNumber = heroPropertiesData?.contactInfo?.whatsappNumber || "919910374156";
   const whatsappMessage =
     heroPropertiesData?.contactInfo?.whatsappMessage ||
-    "Hello, I would like more information on Hero Properties.";
+    "Hello, I would like more information on Hero Homes.";
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
 
   const phoneNumber = heroPropertiesData?.contactInfo?.phone || "+91 99103 74156";
@@ -75,7 +75,7 @@ export default function Navbar() {
               <Link
                 href="/"
                 className="group flex items-center gap-3 select-none"
-                aria-label="Hero Properties Home"
+                aria-label="Hero Homes"
               >
                 <div className="relative h-10 w-10 sm:h-11 sm:w-11 rounded-lg bg-[#F7F2E7] p-1 border border-[#E8DEC8] flex items-center justify-center overflow-hidden transition-all duration-300 group-hover:border-[#C5A059]">
                   <Image
@@ -93,7 +93,7 @@ export default function Navbar() {
                       Hero
                     </span>
                     <span className="font-serif text-lg sm:text-xl font-medium tracking-tight text-[#C5A059]">
-                      Properties
+                      Homes
                     </span>
                   </div>
                 </div>
