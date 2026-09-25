@@ -162,7 +162,7 @@ export default function Hero() {
           </div>
 
           <p className="text-gray-200 text-xs sm:text-base lg:text-lg mb-6 leading-relaxed max-w-2xl font-light mx-auto lg:mx-0 drop-shadow-sm">
-            Ultra-Luxury 3 & 4 BHK Smart Green Residences set within an expansive gated township. 
+            Ultra-Luxury 3 BHK Smart Green Residences set within an expansive gated township. 
             Featuring Fully Furnished Homes, world-class architecture, and sustainable luxury planning. 
             Starting Price <strong className="text-[#F3E2B8] font-semibold">₹1.89 Cr* Onwards</strong>.
           </p>
