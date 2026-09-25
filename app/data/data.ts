@@ -104,7 +104,7 @@ export const heroPropertiesData: ProjectData = {
     phone: "+91 99103 74156",
     whatsappNumber: "917042080055",
     whatsappMessage:
-      "Hi! 👋 I would like to know more about the Hero Properties project. Please share the pricing sheet, floor plans, and current launch offers.",
+      "Hi! I’m interested in Hero Homes, Greater Noida. Please share the price list, floor plans & latest launch offers",
     email: "realtyfmleads@gmail.com",
     salesDeskEmail: "realtyfmleads@gmail.com",
   },

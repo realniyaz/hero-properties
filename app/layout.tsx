@@ -19,9 +19,9 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL("http://heroproperties.in"),
-  title: "Hero Homes | Ultra-Luxury 3 & 4 BHK Smart Green Residences",
+  title: "Hero Homes | Ultra-Luxury 3BHK Smart Green Residences",
   description:
-    "Welcome to Hero Homes. Explore signature 3 & 4 BHK luxury residences built with IGBC Gold green standards, biometric wellness, and futuristic smart home features.",
+    "Welcome to Hero Homes. Explore signature 3 BHK luxury residences built with IGBC Gold green standards, biometric wellness, and futuristic smart home features.",
   keywords: [
     "Hero Properties",
     "Hero Homes",
@@ -73,7 +73,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Hero Homes | Luxury Living Engineered",
     description:
-      "Ultra-luxury 3 & 4 BHK residences. Download official brochures and schedule priority preview visits.",
+      "Ultra-luxury 3 BHK residences. Download official brochures and schedule priority preview visits.",
     images: ["/banners/banner1.png"],
   },
   other: {

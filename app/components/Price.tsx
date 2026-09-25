@@ -194,26 +194,25 @@ export default function Price() {
         {/* RESIDENCE SIZES & TYPOLOGIES STRIP                        */}
         {/* ========================================================= */}
         <div className="w-full max-w-4xl mb-12">
-          <div className="text-center mb-5">
+          <div className="text-center mb-6">
             <span className="text-[10px] font-sans font-bold uppercase tracking-[0.24em] text-[#C5A059]">
               Available Configurations
             </span>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
             {availableSizes.map((item) => (
               <div
                 key={item.typology}
-                onClick={() => handleOpenModal(`${item.size} - ${item.typology}`)}
-                className="group relative p-6 rounded-2xl bg-white hover:bg-[#FAF9F5] border border-[#E8DEC8] hover:border-[#C5A059] cursor-pointer transition-all duration-300 shadow-sm hover:shadow-lg text-center flex flex-col justify-between"
+                className="group relative p-6 sm:p-7 rounded-2xl bg-white border border-[#E8DEC8] hover:border-[#C5A059] transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.03)] hover:shadow-[0_15px_35px_rgba(197,160,89,0.12)] text-center flex flex-col justify-between"
               >
                 {item.badge && (
-                  <span className="absolute -top-2.5 right-4 px-2.5 py-0.5 rounded-full bg-[#121214] text-[#FDFBF7] font-sans font-bold text-[9px] uppercase tracking-wider shadow-sm">
+                  <span className="absolute -top-2.5 right-4 px-3 py-0.5 rounded-full bg-[#121214] text-[#FDFBF7] font-sans font-bold text-[9px] uppercase tracking-wider shadow-sm">
                     {item.badge}
                   </span>
                 )}
 
-                <div>
+                <div className="mb-6">
                   <span className="text-xs font-sans text-[#5A5D64] uppercase tracking-widest block mb-1">
                     Super Area
                   </span>
@@ -228,10 +227,15 @@ export default function Price() {
                   </span>
                 </div>
 
-                <div className="pt-4 mt-4 border-t border-[#E8DEC8]/60 flex items-center justify-center gap-1.5 text-[10.5px] font-sans font-semibold uppercase tracking-wider text-[#121214] group-hover:text-[#C5A059] transition-colors">
+                {/* Inquire Layout Gold Action Button */}
+                <button
+                  type="button"
+                  onClick={() => handleOpenModal(`${item.size} - ${item.typology}`)}
+                  className="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-[#C5A059] via-[#D4AF37] to-[#9E7B35] hover:brightness-105 text-[#121214] font-sans font-bold text-[11px] uppercase tracking-[0.14em] shadow-[0_4px_14px_rgba(197,160,89,0.25)] hover:shadow-[0_6px_20px_rgba(197,160,89,0.4)] flex items-center justify-center gap-2 transition-all duration-200 border border-[#F3E2B8]/40 active:scale-95 cursor-pointer"
+                >
                   <span>Inquire Layout</span>
-                  <Maximize2 className="w-3 h-3" />
-                </div>
+                  <Maximize2 className="w-3.5 h-3.5 text-[#121214]" />
+                </button>
               </div>
             ))}
           </div>

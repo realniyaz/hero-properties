@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Phone, ArrowUpRight, ShieldCheck } from "lucide-react";
+import { Phone, ArrowUpRight, ShieldCheck, Heart } from "lucide-react";
 import { heroPropertiesData } from "@/app/data/data";
 
 export default function Footer() {
@@ -28,7 +28,7 @@ export default function Footer() {
   const phoneNumber = heroPropertiesData?.contactInfo?.phone || "+91 99103 74156";
   const whatsappNumber = heroPropertiesData?.contactInfo?.whatsappNumber || "919910374156";
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-    heroPropertiesData?.contactInfo?.whatsappMessage || "Hi, I would like to inquire about Hero Properties Greater Noida."
+    heroPropertiesData?.contactInfo?.whatsappMessage || "Hi, I would like to inquire about Hero Homes Greater Noida."
   )}`;
 
   const menuLinks = [
@@ -46,21 +46,23 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="relative bg-[#121214] text-[#FDFBF7] pt-20 pb-12 border-t border-[#E8DEC8]/15 overflow-hidden">
+    <footer className="relative bg-[#121214] text-[#FDFBF7] pt-20 pb-10 border-t border-[#E8DEC8]/15 overflow-hidden">
       {/* Ambient background glow */}
       <div className="absolute top-0 left-1/4 w-[500px] h-[300px] bg-[#C5A059]/[0.03] rounded-full blur-[140px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-10 pb-16 border-b border-white/10">
+        
+        {/* ========================================================= */}
+        {/* TOP GRID: BRAND, NAVIGATION, COMPLIANCE & CONTACT         */}
+        {/* ========================================================= */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-10 pb-14 border-b border-white/10">
           
-          {/* ========================================================= */}
-          {/* LEFT SIDE: LOGO & BRAND DESCRIPTION (5 Cols)             */}
-          {/* ========================================================= */}
+          {/* Brand Column (5 Cols) */}
           <div className="lg:col-span-5 space-y-5">
             <Link
               href="/"
               className="group inline-flex items-center gap-3 select-none"
-              aria-label="Hero Properties Home"
+              aria-label="Hero Homes Home"
             >
               <div className="relative h-11 w-11 rounded-xl bg-white p-1 border border-[#E8DEC8] flex items-center justify-center overflow-hidden transition-all duration-300 group-hover:border-[#C5A059]">
                 <Image
@@ -77,7 +79,7 @@ export default function Footer() {
                     Hero
                   </span>
                   <span className="font-serif text-xl font-medium tracking-tight text-[#C5A059]">
-                    Properties
+                    Homes
                   </span>
                 </div>
                 <span className="text-[9px] font-sans font-semibold tracking-[0.24em] text-gray-400 uppercase mt-1">
@@ -96,9 +98,7 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* ========================================================= */}
-          {/* COLUMN 1: MENU ITEMS (2 Cols)                            */}
-          {/* ========================================================= */}
+          {/* Navigation Column (2 Cols) */}
           <div className="lg:col-span-2 space-y-4">
             <span className="text-[11px] font-sans font-bold uppercase tracking-[0.22em] text-[#C5A059] block">
               Navigation
@@ -119,9 +119,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* ========================================================= */}
-          {/* COLUMN 2: LEGAL PAGES (2 Cols)                           */}
-          {/* ========================================================= */}
+          {/* Compliance Column (2 Cols) */}
           <div className="lg:col-span-2 space-y-4">
             <span className="text-[11px] font-sans font-bold uppercase tracking-[0.22em] text-[#C5A059] block">
               Compliance
@@ -141,9 +139,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* ========================================================= */}
-          {/* COLUMN 3: CONTACT INFORMATION (3 Cols)                   */}
-          {/* ========================================================= */}
+          {/* Direct Concierge Contact Column (3 Cols) */}
           <div className="lg:col-span-3 space-y-4">
             <span className="text-[11px] font-sans font-bold uppercase tracking-[0.22em] text-[#C5A059] block">
               Concierge Contact
@@ -203,22 +199,30 @@ export default function Footer() {
         </div>
 
         {/* ========================================================= */}
-        {/* STATUTORY DISCLAIMER                                      */}
+        {/* STATUTORY REAL ESTATE DISCLAIMER                         */}
         {/* ========================================================= */}
-        <div className="py-8 border-b border-white/10 space-y-2 text-center sm:text-left">
+        <div className="py-6 border-b border-white/10 space-y-2 text-center sm:text-left">
           <span className="text-[10px] font-sans font-bold uppercase tracking-[0.2em] text-[#C5A059] block">
             Official Real Estate Disclaimer
           </span>
           <p className="text-[11px] font-sans text-gray-400 leading-relaxed font-light">
-            Disclaimer: This website is an authorized channel partner portal operated for project showcasing and sales coordination of Hero Properties residences in Greater Noida, UP. All architectural visualizations, elevations, landscape plans, and unit configurations are artistic representations. Registered under UP RERA guidelines. All transactions are governed strictly by the formal Builder-Buyer Agreement.
+            Disclaimer: This website is an authorized channel partner portal operated for project showcasing and sales coordination of Hero Homes residences in Greater Noida, UP. All architectural visualizations, elevations, landscape plans, and unit configurations are artistic representations. Registered under UP RERA guidelines. All transactions are governed strictly by the formal Builder-Buyer Agreement.
           </p>
         </div>
 
         {/* ========================================================= */}
-        {/* COPYRIGHT BAR WITH DIRECT LEGAL ROUTE LINKS               */}
+        {/* COPYRIGHT & MARGAUX TECH ATTRIBUTION BAR                  */}
         {/* ========================================================= */}
-        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-sans text-gray-400">
-          <p>© {new Date().getFullYear()} Hero Properties. All rights reserved.</p>
+        <div className="pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-sans text-gray-400">
+          
+          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 text-center sm:text-left">
+            <p>© {new Date().getFullYear()} Hero Homes. All rights reserved.</p>
+            <span className="hidden sm:inline text-gray-600">•</span>
+            <p className="text-[11px] text-[#C5A059] font-medium tracking-wide">
+              Designed & Managed by Margaux Tech
+            </p>
+          </div>
+
           <div className="flex items-center gap-6 text-[11px]">
             <Link href="/privacy" className="hover:text-white transition-colors">
               Privacy Policy
@@ -230,7 +234,9 @@ export default function Footer() {
               Disclaimer
             </Link>
           </div>
+
         </div>
+
       </div>
     </footer>
   );
