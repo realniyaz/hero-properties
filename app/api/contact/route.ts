@@ -3,116 +3,132 @@ import { Resend } from "resend";
 
 export async function POST(request: Request) {
   try {
-    const body = await request.json();
-    const { name, phone, email, planType, service, message } = body;
-
-    // 1. Validation Guard Check
-    if (!name || !phone) {
+    const resendApiKey = process.env.RESEND_API_KEY;
+    
+    if (!resendApiKey) {
       return NextResponse.json(
-        { error: "Name and Phone number are required." },
+        { error: "Server configuration error: Resend API key is missing." },
+        { status: 500 }
+      );
+    }
+
+    const resend = new Resend(resendApiKey);
+    const body = await request.json();
+    const { name, email, phone, unitType, floorplanRequested, inquiryType } = body;
+
+    if (!name || !email || !phone) {
+      return NextResponse.json(
+        { error: "Missing required fields (name, email, phone)." },
         { status: 400 }
       );
     }
 
-    // 2. Mobile cleanup & timestamp generation for LeadRat
-    const cleanedMobile = phone.replace(/\D/g, "").slice(-10);
+    // Format current date and time for LeadRat CRM payload
     const now = new Date();
-    const pad = (n: number) => String(n).padStart(2, "0");
-    const submittedDate = `${pad(now.getDate())}-${pad(now.getMonth() + 1)}-${String(now.getFullYear()).slice(-2)}`;
-    const submittedTime = `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+    const day = String(now.getDate()).padStart(2, "0");
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const year = String(now.getFullYear()).slice(-2);
+    const submittedDate = `${day}-${month}-${year}`;
+    const submittedTime = now.toTimeString().split(" ")[0];
 
-    // 3. Dispatch lead to LeadRat CRM
+    // ================= 1. PUSH LEAD TO LEADRAT CRM =================
+    const leadRatPayload = {
+      name: name,
+      state: "Uttar Pradesh",
+      city: "Greater Noida",
+      location: "Prime Growth Corridor, NCR",
+      budget: "18500000", // Starting reference ₹1.85 Cr Onwards
+      notes: unitType ? `Interested in ${unitType}` : floorplanRequested ? `Requested Floorplan: ${floorplanRequested}` : "Website General Inquiry",
+      email: email,
+      countryCode: "91",
+      mobile: phone,
+      project: "Hero Properties Residences",
+      property: "Apartment",
+      leadExpectedBudget: "18500000",
+      propertyType: "Residential",
+      submittedDate: submittedDate,
+      submittedTime: submittedTime,
+      LeadId: "",
+      subsource: "Hero Properties Landing Page",
+      leadStatus: "Schedule Site Visit or Schedule Meeting",
+      callRecordingUrl: "",
+      scheduledDate: "",
+      additionalProperties: {
+        source: "hero-properties",
+        inquiryContext: unitType || floorplanRequested || inquiryType || "General",
+      },
+    };
+
+    let crmResponseStatus = null;
+    let crmResponseBody = null;
+
     try {
-      const crmApiKey =
-        process.env.LEADRAT_API_KEY || "YTBlMzgxODItZWU0NC00M2I1LThhNDQtZWVlOTg3M2I0ZmFl";
-
-      await fetch("https://connect.leadrat.com/api/v1/integration/Website", {
+      const crmRes = await fetch("https://connect.leadrat.com/api/v1/integration/Website", {
         method: "POST",
         headers: {
+          "API-Key": "MGM1ZmQ4NTUtMjIwNi00YTVlLWEwZGEtYjU5NzRhNjJmMzIx",
           "Content-Type": "application/json",
-          "API-Key": crmApiKey,
         },
-        body: JSON.stringify([
-          {
-            name: name,
-            mobile: cleanedMobile,
-            email: email || "",
-            countryCode: "91",
-            project: "Hero Properties",
-            property: "Apartment",
-            propertyType: planType || service || "3 & 4 BHK Luxury Residences",
-            notes: `Lead Source: Hero Properties (heroproperties.in / heroproperties.co.in). Typology: ${planType || service || "General Enquiry"}. Message: ${message || "N/A"}`,
-            submittedDate: submittedDate,
-            submittedTime: submittedTime,
-            subsource: "Google",
-            leadStatus: "New",
-          },
-        ]),
+        body: JSON.stringify([leadRatPayload]),
       });
-    } catch (crmError) {
-      console.error("LeadRat CRM Integration Error:", crmError);
+
+      crmResponseStatus = crmRes.status;
+      crmResponseBody = await crmRes.text();
+    } catch (crmError: any) {
+      console.error("Failed to push lead to LeadRat CRM:", crmError);
+      crmResponseBody = crmError.message || "CRM Connection Failed";
     }
 
-    // 4. Dispatch Email via Resend
-    if (!process.env.RESEND_API_KEY) {
-      throw new Error("Missing RESEND_API_KEY in environment variables.");
-    }
+    // ================= 2. SEND NOTIFICATION EMAIL VIA RESEND =================
+    const contextTag = unitType ? `[Unit: ${unitType}]` : floorplanRequested ? `[Floorplan: ${floorplanRequested}]` : inquiryType ? `[Type: ${inquiryType}]` : "";
 
-    const resend = new Resend(process.env.RESEND_API_KEY);
-    const recipientEmail =
-      process.env.LEAD_RECIPIENT_EMAIL || "realtyfmleads@gmail.com";
-
-    const emailHtml = `
-      <div style="font-family: Arial, sans-serif; padding: 24px; background-color: #FDFBF7; color: #121214; border: 1px solid #E8DEC8; border-radius: 12px; max-width: 560px; margin: auto;">
-        <div style="border-bottom: 2px solid #E31826; padding-bottom: 12px; margin-bottom: 16px;">
-          <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: #C5A059; font-weight: bold;">
-            Hero Properties • Lead Notification
-          </span>
-          <h2 style="color: #121214; margin: 4px 0 0 0; font-size: 20px;">New Prospect Enquiry</h2>
+    const emailData = await resend.emails.send({
+      from: "Hero Properties Leads <onboarding@resend.dev>",
+      to: ["realtyfmleads@gmail.com"],
+      subject: `New Lead Inquiry ${contextTag}: ${name} - Hero Properties`,
+      html: `
+        <div style="font-family: Arial, sans-serif; padding: 20px; color: #0F172A; background-color: #FBF9F5; border: 1px solid #E2E8F0; border-radius: 8px;">
+          <h2 style="color: #1C3D2F; border-bottom: 2px solid #D4AF37; padding-bottom: 8px;">New Lead Received - Hero Properties Residences</h2>
+          <p>You have received a new inquiry from the landing page:</p>
+          <table style="width: 100%; margin-top: 15px; border-collapse: collapse;">
+            <tr>
+              <td style="padding: 10px; border-bottom: 1px solid #E2E8F0; font-weight: bold; width: 140px;">Full Name:</td>
+              <td style="padding: 10px; border-bottom: 1px solid #E2E8F0;">${name}</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border-bottom: 1px solid #E2E8F0; font-weight: bold;">Email Address:</td>
+              <td style="padding: 10px; border-bottom: 1px solid #E2E8F0;"><a href="mailto:${email}">${email}</a></td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border-bottom: 1px solid #E2E8F0; font-weight: bold;">Phone Number:</td>
+              <td style="padding: 10px; border-bottom: 1px solid #E2E8F0;"><a href="tel:${phone}">${phone}</a></td>
+            </tr>
+            ${unitType ? `
+            <tr>
+              <td style="padding: 10px; border-bottom: 1px solid #E2E8F0; font-weight: bold;">Selected Unit:</td>
+              <td style="padding: 10px; border-bottom: 1px solid #E2E8F0;">${unitType}</td>
+            </tr>` : ""}
+            ${floorplanRequested ? `
+            <tr>
+              <td style="padding: 10px; border-bottom: 1px solid #E2E8F0; font-weight: bold;">Floorplan Requested:</td>
+              <td style="padding: 10px; border-bottom: 1px solid #E2E8F0;">${floorplanRequested}</td>
+            </tr>` : ""}
+          </table>
+          <p style="margin-top: 20px; font-size: 12px; color: #64748B;">Lead synced with LeadRat CRM (Status: ${crmResponseStatus || 'N/A'})</p>
         </div>
-        <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
-          <tr>
-            <td style="padding: 8px 0; color: #5A5D64; width: 140px; font-weight: bold;">Full Name:</td>
-            <td style="padding: 8px 0; color: #121214; font-weight: bold;">${name}</td>
-          </tr>
-          <tr>
-            <td style="padding: 8px 0; color: #5A5D64; font-weight: bold;">Phone Number:</td>
-            <td style="padding: 8px 0; color: #121214;"><a href="tel:${phone}" style="color: #E31826; text-decoration: none; font-weight: bold;">${phone}</a></td>
-          </tr>
-          <tr>
-            <td style="padding: 8px 0; color: #5A5D64; font-weight: bold;">Email Address:</td>
-            <td style="padding: 8px 0; color: #121214;">${email || "Not Provided"}</td>
-          </tr>
-          <tr>
-            <td style="padding: 8px 0; color: #5A5D64; font-weight: bold;">Enquiry Type:</td>
-            <td style="padding: 8px 0; color: #C5A059; font-weight: bold;">${planType || service || "General Consultation"}</td>
-          </tr>
-          ${
-            message
-              ? `<tr>
-                  <td style="padding: 8px 0; color: #5A5D64; font-weight: bold;">Message:</td>
-                  <td style="padding: 8px 0; color: #121214;">${message}</td>
-                </tr>`
-              : ""
-          }
-        </table>
-        <hr style="border: none; border-top: 1px solid #E8DEC8; margin: 20px 0 12px 0;" />
-        <p style="font-size: 11px; color: #888; margin: 0;">
-          Dispatched from Hero Properties Portal (heroproperties.in / heroproperties.co.in) to LeadRat CRM & ${recipientEmail}.
-        </p>
-      </div>
-    `;
-
-    const data = await resend.emails.send({
-      from: "Hero Properties <onboarding@resend.dev>",
-      to: [recipientEmail],
-      subject: `New Lead: ${name} (${planType || "Hero Properties Enquiry"})`,
-      html: emailHtml,
+      `,
     });
 
-    return NextResponse.json({ success: true, data }, { status: 200 });
+    return NextResponse.json({ 
+      success: true, 
+      emailData, 
+      leadRatSync: {
+        status: crmResponseStatus,
+        response: crmResponseBody
+      } 
+    }, { status: 200 });
+
   } catch (error: any) {
-    console.error("API Lead Error:", error);
     return NextResponse.json(
       { error: error.message || "Internal Server Error" },
       { status: 500 }
