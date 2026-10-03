@@ -42,19 +42,19 @@ export async function POST(request: Request) {
       email: email,
       countryCode: "91",
       mobile: phone,
-      project: "Hero Properties Residences",
+      project: "Hero Homes Residences",
       property: "Apartment",
       leadExpectedBudget: "18500000",
       propertyType: "Residential",
       submittedDate: submittedDate,
       submittedTime: submittedTime,
       LeadId: "",
-      subsource: "Hero Properties Landing Page",
+      subsource: "Hero Homes Landing Page",
       leadStatus: "Schedule Site Visit or Schedule Meeting",
       callRecordingUrl: "",
       scheduledDate: "",
       additionalProperties: {
-        source: "hero-properties",
+        source: "hero-homes",
         inquiryContext: unitType || floorplanRequested || inquiryType || "General",
       },
     };
@@ -85,7 +85,7 @@ export async function POST(request: Request) {
     const emailData = await resend.emails.send({
       from: "Hero Properties Leads <onboarding@resend.dev>",
       to: ["realtyfmleads@gmail.com"],
-      subject: `New Lead Inquiry ${contextTag}: ${name} - Hero Properties`,
+      subject: `New Lead Inquiry ${contextTag}: ${name} - Hero Homes`,
       html: `
         <div style="font-family: Arial, sans-serif; padding: 20px; color: #0F172A; background-color: #FBF9F5; border: 1px solid #E2E8F0; border-radius: 8px;">
           <h2 style="color: #1C3D2F; border-bottom: 2px solid #D4AF37; padding-bottom: 8px;">New Lead Received - Hero Properties Residences</h2>
