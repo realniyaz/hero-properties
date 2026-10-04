@@ -83,12 +83,12 @@ export async function POST(request: Request) {
     const contextTag = unitType ? `[Unit: ${unitType}]` : floorplanRequested ? `[Floorplan: ${floorplanRequested}]` : inquiryType ? `[Type: ${inquiryType}]` : "";
 
     const emailData = await resend.emails.send({
-      from: "Hero Properties Leads <onboarding@resend.dev>",
+      from: "Hero Homes Leads <onboarding@resend.dev>",
       to: ["realtyfmleads@gmail.com"],
       subject: `New Lead Inquiry ${contextTag}: ${name} - Hero Homes`,
       html: `
         <div style="font-family: Arial, sans-serif; padding: 20px; color: #0F172A; background-color: #FBF9F5; border: 1px solid #E2E8F0; border-radius: 8px;">
-          <h2 style="color: #1C3D2F; border-bottom: 2px solid #D4AF37; padding-bottom: 8px;">New Lead Received - Hero Properties Residences</h2>
+          <h2 style="color: #1C3D2F; border-bottom: 2px solid #D4AF37; padding-bottom: 8px;">New Lead Received - Hero Homes Residences</h2>
           <p>You have received a new inquiry from the landing page:</p>
           <table style="width: 100%; margin-top: 15px; border-collapse: collapse;">
             <tr>
