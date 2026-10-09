@@ -86,12 +86,12 @@ export interface ProjectData {
 
 export const heroPropertiesData: ProjectData = {
   projectInfo: {
-    name: "Hero Properties",
+    name: "Hero Homes",
     tagline: "Elevated Living Engineered by Hero Realty",
     subHeading: "Ultra-Luxury 3 & 4 BHK Smart Green Residences",
     developer: "Hero Realty (Hero Enterprise)",
     location: "Prime Growth Corridor",
-    address: "Hero Properties, Sector Growth Corridor, NCR",
+    address: "Hero Homes, Sector Growth Corridor, NCR",
     landParcel: "Expansive Gated Township",
     towers: "Iconic High-Rise Towers",
     structure: "G+34 Floors",
@@ -142,7 +142,7 @@ export const heroPropertiesData: ProjectData = {
     title: "Legacy of Engineering & Architectural Trust",
     subtitle: "Hero Realty Heritage",
     description: [
-      "Hero Properties introduces an ultra-luxury residential address engineered with precision, sustainable green living, and smart automation built directly into the fabric of daily life.",
+      "Hero Homes introduces an ultra-luxury residential address engineered with precision, sustainable green living, and smart automation built directly into the fabric of daily life.",
       "Spread across vast landscaped acres, the development features low-density tower placement ensuring expansive natural daylight, cross-ventilation, and majestic skyline vistas.",
     ],
     keyStats: [
